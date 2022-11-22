@@ -13,8 +13,8 @@ jobs:
           name: Download Korea pbf
           command: wget https://download.geofabrik.de/asia/south-korea-latest.osm.pbf
       - run:
-          name: test
-          command: ls -alRh .
+          name: Change permission
+          command: chmod +x osmfilter32 osmconvert64
       - run:
           name: Filtering
           command: ./osmfilter32 south-korea-latest.osm --keep="water= highway=primary highway=motorway waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
