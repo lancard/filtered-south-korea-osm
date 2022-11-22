@@ -1,0 +1,19 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: wget
+
+workflows:
+  south-korea:
+    jobs:
+      - build-and-test
