@@ -1,0 +1,34 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7
+
+jobs:
+  download-and-filter:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout      
+      - run:
+          name: Compile osmfilter
+          command: wget -O - http://m.m.i24.cc/osmfilter.c | cc -x c - -O3 -o osmfilter
+      - run:
+          name: Compile osmconvert
+          command: wget -O - http://m.m.i24.cc/osmconvert.c | cc -x c - -lz -O3 -o osmconvert
+      - run:
+          name: Download Korea pbf
+          command: wget https://download.geofabrik.de/asia/south-korea-latest.osm.pbf
+      - run:
+          name: Uncompress Korea pbf
+          command: ./osmconvert south-korea-latest.osm.pbf -o=south-korea-latest.osm
+      - run:
+          name: Filtering
+          command: ./osmfilter south-korea-latest.osm --keep="water= highway=primary highway=motorway waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
+      - run:
+          name: Compress to pbf
+          command: ./osmconvert filtered.osm -o=filtered.osm.pbf
+
+workflows:
+  south-korea:
+    jobs:
+      - download-and-filter
