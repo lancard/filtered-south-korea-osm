@@ -19,6 +19,9 @@ jobs:
           name: Download Korea pbf
           command: wget https://download.geofabrik.de/asia/south-korea-latest.osm.pbf
       - run:
+          name: Uncompress Korea pbf
+          command: ./osmconvert south-korea-latest.osm.pbf -o=south-korea-latest.osm
+      - run:
           name: Filtering
           command: ./osmfilter south-korea-latest.osm --keep="water= highway=primary highway=motorway waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
       - run:
