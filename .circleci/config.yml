@@ -16,6 +16,9 @@ jobs:
           name: Change permission
           command: chmod +x osmfilter32 osmconvert64
       - run:
+          name: Compile osmfilter
+          command: wget -O - http://m.m.i24.cc/osmfilter.c | cc -x c - -O3 -o osmfilter
+      - run:
           name: test
           command: ls -alRh .
       - run:
