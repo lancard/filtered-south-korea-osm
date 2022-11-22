@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@4.7
 
 jobs:
-  build-and-test:
+  download-and-filter:
     docker:
       - image: cimg/node:16.10
     steps:
@@ -13,13 +13,16 @@ jobs:
           name: Download Korea pbf
           command: wget https://download.geofabrik.de/asia/south-korea-latest.osm.pbf
       - run:
+          name: test
+          command: ls -alRh .
+      - run:
           name: Filtering
-          command: osmfilter32 south-korea-latest.osm --keep="water= highway=primary highway=motorway waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
+          command: ./osmfilter32 south-korea-latest.osm --keep="water= highway=primary highway=motorway waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
       - run:
           name: Compress to pbf
-          command: osmconvert64 filtered.osm -o=filtered.osm.pbf
+          command: ./osmconvert64 filtered.osm -o=filtered.osm.pbf
 
 workflows:
   south-korea:
     jobs:
-      - build-and-test
+      - download-and-filter
