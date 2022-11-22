@@ -16,6 +16,9 @@ jobs:
           name: Change permission
           command: chmod +x osmfilter32 osmconvert64
       - run:
+          name: test
+          command: ls -alRh .
+      - run:
           name: Filtering
           command: ./osmfilter32 south-korea-latest.osm --keep="water= highway=primary highway=motorway waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
       - run:
