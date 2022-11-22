@@ -27,6 +27,15 @@ jobs:
       - run:
           name: Compress to pbf
           command: ./osmconvert filtered.osm -o=filtered.osm.pbf
+      - run:
+          name: Git add
+          command: git add filtered.osm.pbf
+      - run:
+          name: Git commit
+          command: git commit -m "periodic updates"
+      - run:
+          name: Git push
+          command: git push https://${GITHUB_TOKEN}@github.com/lancard/filtered-south-korea-osm.git
 
 workflows:
   south-korea:
