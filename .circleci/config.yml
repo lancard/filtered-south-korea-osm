@@ -28,6 +28,12 @@ jobs:
           name: Compress to pbf
           command: ./osmconvert filtered.osm -o=filtered.osm.pbf
       - run:
+          name: Git config (user name)
+          command: git config user.name ${GITHUB_USER_NAME}
+      - run:
+          name: Git config (user email)
+          command: git config user.email ${GITHUB_USER_EMAIL}
+      - run:
           name: Git add
           command: git add filtered.osm.pbf
       - run:
