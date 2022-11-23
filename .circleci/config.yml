@@ -23,7 +23,7 @@ jobs:
           command: ./osmconvert south-korea-latest.osm.pbf -o=south-korea-latest.osm
       - run:
           name: Filtering
-          command: ./osmfilter south-korea-latest.osm --keep="water= highway=primary highway=motorway waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
+          command: ./osmfilter south-korea-latest.osm --keep="water= highway=primary highway=primary_link highway=motorway highway=motorway_link highway=trunk highway=trunk_link waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
       - run:
           name: Compress to pbf
           command: ./osmconvert filtered.osm -o=filtered.osm.pbf
