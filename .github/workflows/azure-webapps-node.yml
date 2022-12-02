@@ -1,0 +1,28 @@
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Compile osmfilter
+      run: wget -O - http://m.m.i24.cc/osmfilter.c | cc -x c - -O3 -o osmfilter
+      
+    - name: Compile osmconvert
+      run: wget -O - http://m.m.i24.cc/osmconvert.c | cc -x c - -lz -O3 -o osmconvert
+      
+    - name: Download Korea pbf
+      run: wget https://download.geofabrik.de/asia/south-korea-latest.osm.pbf
+
+    - name: Uncompress Korea pbf
+      run: ./osmconvert south-korea-latest.osm.pbf -o=south-korea-latest.osm
+
+    - name: Filtering
+      run: ./osmfilter south-korea-latest.osm --keep="water= highway=primary highway=primary_link highway=motorway highway=motorway_link highway=trunk highway=trunk_link waterway= railway= natural=coastline narutal=peak aeroway=" > filtered.osm
+
+    - name: Compress to pbf
+      run: ./osmconvert filtered.osm -o=filtered.osm.pbf
