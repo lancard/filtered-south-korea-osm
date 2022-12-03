@@ -1,3 +1,5 @@
+name: build
+
 on:
   schedule:
     - cron: '17 5 4 * *'
