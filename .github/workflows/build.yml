@@ -26,3 +26,9 @@ jobs:
 
     - name: Compress to pbf
       run: ./osmconvert filtered.osm -o=filtered.osm.pbf
+
+    - name: Commit changes
+      run: |
+        git add filtered.osm.pbf
+        git commit -am "upload filtered.osm.pbf"
+        git push
