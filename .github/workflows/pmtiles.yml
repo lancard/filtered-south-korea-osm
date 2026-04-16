@@ -21,11 +21,9 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/data \
-            systemed/tilemaker:latest \
-            --input /data/south-korea-latest.osm.pbf \
-            --output /data/south-korea.pmtiles \
-            --config /opt/tilemaker/resources/config-openmaptiles.json \
-            --process /opt/tilemaker/resources/process-openmaptiles.lua
+            ghcr.io/systemed/tilemaker:master \
+            /data/south-korea-latest.osm.pbf \
+            --output /data/south-korea.pmtiles
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
